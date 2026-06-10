@@ -41,6 +41,39 @@
     }
     .btn-nav:hover { background: #b07d2f !important; }
 
+    /* hamburger */
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer;
+      padding: 4px; width: 36px; height: 36px;
+    }
+    .nav-hamburger span {
+      display: block; height: 2px; background: #fff;
+      border-radius: 2px; transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile nav drawer */
+    .nav-drawer {
+      display: none; position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--navy); flex-direction: column;
+      padding: 1rem 1.5rem 1.5rem; gap: 0; z-index: 99;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-family: Arial, sans-serif; font-size: 1rem;
+      padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-drawer a:last-child { border-bottom: none; margin-top: 0.5rem; }
+    .nav-drawer .btn-nav {
+      text-align: center; padding: 0.75rem; border-radius: 4px; margin-top: 0.5rem;
+    }
+
     /* ── HERO ────────────────────────────────────── */
     .hero {
       position: relative; height: 88vh; min-height: 520px;
@@ -278,6 +311,55 @@
     }
     .btn-submit:hover { background: #b07d2f; }
 
+    /* ── MOBILE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      /* nav */
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-brand { font-size: 0.85rem; }
+
+      /* hero */
+      .hero { height: 70vh; min-height: 400px; }
+      .hero-content { bottom: 2rem; padding: 0 1rem; }
+      .hero-arrow { width: 36px; height: 36px; font-size: 1.1rem; }
+      .hero-arrow.prev { left: 0.5rem; }
+      .hero-arrow.next { right: 0.5rem; }
+
+      /* stats */
+      .stat { padding: 0.9rem 0; width: 33.33%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .stat:nth-child(3n) { }
+      .stats-bar { flex-wrap: wrap; }
+      .stat-num { font-size: 1.2rem; }
+
+      /* sections */
+      section { padding: 2.5rem 1rem; }
+      h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+
+      /* virtual tour */
+      .tour-embed { height: 280px; }
+
+      /* gallery */
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+
+      /* terms */
+      .terms-grid { grid-template-columns: 1fr; }
+
+      /* submit button full width */
+      .btn-submit { width: 100%; text-align: center; }
+
+      /* contact detail wraps */
+      .contact-detail { font-size: 0.82rem; }
+
+      /* floor plan tabs */
+      .fp-tab { font-size: 0.75rem; padding: 0.45rem 0.9rem; }
+    }
+
+    /* prevent iOS zoom on input focus */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: 16px; }
+    }
+
     /* ── FOOTER ──────────────────────────────────── */
     footer {
       background: #1a252f; color: rgba(255,255,255,0.5);
@@ -299,7 +381,17 @@
     <a href="#terms">Rental Terms</a>
     <a href="#contact" class="btn-nav">Schedule a Tour</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#gallery" onclick="closeNav()">Photos</a>
+  <a href="#tour" onclick="closeNav()">3D Tour</a>
+  <a href="#terms" onclick="closeNav()">Rental Terms</a>
+  <a href="#contact" class="btn-nav" onclick="closeNav()">Schedule a Tour</a>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -316,7 +408,7 @@
     <div class="hero-tag">For Rent · Colorado Springs, CO</div>
     <div class="hero-address">320 W Cheyenne Mountain Blvd</div>
     <div class="hero-city">Broadmoor Neighborhood · 80906</div>
-    <div class="hero-price">$3,950 <small>/month</small></div>
+    <div class="hero-price">$4,025 <small>/month</small></div>
   </div>
   <button class="hero-arrow prev" onclick="heroStep(-1)">&#8249;</button>
   <button class="hero-arrow next" onclick="heroStep(1)">&#8250;</button>
@@ -435,13 +527,13 @@
       <div class="term-card">
         <div class="term-card-icon">💰</div>
         <div class="term-card-title">Monthly Rent</div>
-        <p><strong>$3,950 / month</strong></p>
+        <p><strong>$4,025 / month</strong></p>
       </div>
 
       <div class="term-card">
         <div class="term-card-icon">🐾</div>
         <div class="term-card-title">Pet Policy</div>
-        <p><strong>1 dog allowed.</strong> Pet rent: <strong>$59/month.</strong> Refundable pet deposit: <strong>$300.</strong></p>
+        <p><strong>1 dog allowed.</strong> Pet rent: <strong>$60/month.</strong> Refundable pet deposit: <strong>$300.</strong></p>
       </div>
 
       <div class="term-card">
@@ -456,11 +548,6 @@
         <p>Tenant responsible for lawn mowing and lawn watering.</p>
       </div>
 
-      <div class="term-card">
-        <div class="term-card-icon">♨️</div>
-        <div class="term-card-title">Hot Tub Maintenance</div>
-        <p>Tenant pays a monthly hot tub maintenance fee of <strong>$75/month</strong>.</p>
-      </div>
 
       <div class="term-card">
         <div class="term-card-icon">📋</div>
@@ -518,8 +605,8 @@
         <h2>Schedule a Tour</h2>
         <p>Interested in making 320 W Cheyenne Mountain Blvd your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
         <div class="contact-detail"><span class="contact-detail-icon">📍</span> 320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</div>
-        <div class="contact-detail"><span class="contact-detail-icon">💵</span> $3,950 / month</div>
-        <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 dog welcome · $59/mo pet rent · $300 deposit</div>
+        <div class="contact-detail"><span class="contact-detail-icon">💵</span> $4,025 / month</div>
+        <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 dog welcome · $60/mo pet rent · $300 deposit</div>
         <div class="contact-detail" style="margin-top:1.5rem;">
           <span class="contact-detail-icon">🏔️</span>
           <em style="font-size:0.88rem;color:var(--muted);">Located in the Broadmoor neighborhood — one of Colorado Springs' most sought-after communities.</em>
@@ -552,7 +639,7 @@
           <label for="pets">Pets?</label>
           <select id="pets" name="pets">
             <option value="none">No pets</option>
-            <option value="dog">Dog (1 allowed · $59/mo + $300 deposit)</option>
+            <option value="dog">Dog (1 allowed · $60/mo + $300 deposit)</option>
           </select>
         </div>
         <div>
@@ -568,11 +655,23 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $3,950/month</p>
+  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $4,025/month</p>
   <p style="margin-top:0.4rem;">Equal Housing Opportunity &nbsp;|&nbsp; Property managed privately</p>
 </footer>
 
 <script>
+  // ── HAMBURGER NAV ───────────────────────────────────────
+  function toggleNav() {
+    const btn = document.getElementById('hamburger');
+    const drawer = document.getElementById('navDrawer');
+    btn.classList.toggle('open');
+    drawer.classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('navDrawer').classList.remove('open');
+  }
+
   // ── HERO SLIDESHOW ──────────────────────────────────────
   const slides = document.querySelectorAll('.hero-slide');
   const dotsEl = document.getElementById('heroDots');
@@ -596,6 +695,15 @@
   }
   function heroStep(d) { goTo(current + d); }
   timer = setInterval(() => goTo(current + 1), 5000);
+
+  // touch swipe on hero
+  let touchStartX = 0;
+  const heroEl = document.querySelector('.hero');
+  heroEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  heroEl.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, {passive:true});
 
   // ── GALLERY ─────────────────────────────────────────────
   const photos = [
