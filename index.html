@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Rent: 320 W Cheyenne Mountain Blvd · Colorado Springs, CO</title>
+  <style>
+    :root {
+      --navy:   #2C3E50;
+      --gold:   #C8913A;
+      --cream:  #F5F1EB;
+      --light:  #FAF8F4;
+      --text:   #333333;
+      --muted:  #6B7280;
+      --border: #E5DDD0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Georgia', serif; color: var(--text); background: var(--light); }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+    }
+    .nav-brand { color: #fff; font-size: 1rem; letter-spacing: 0.05em; }
+    .nav-brand span { color: var(--gold); }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-family: 'Arial', sans-serif; font-size: 0.85rem; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .btn-nav {
+      background: var(--gold); color: #fff !important;
+      padding: 0.45rem 1.1rem; border-radius: 4px;
+      font-weight: bold;
+    }
+    .btn-nav:hover { background: #b07d2f !important; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      position: relative; height: 88vh; min-height: 520px;
+      overflow: hidden;
+    }
+    .hero-slides { position: relative; width: 100%; height: 100%; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.2s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+    }
+    .hero-content {
+      position: absolute; bottom: 3rem; left: 0; right: 0;
+      text-align: center; color: #fff;
+    }
+    .hero-tag {
+      display: inline-block; background: var(--gold);
+      font-family: 'Arial', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 2px; margin-bottom: 0.9rem;
+    }
+    .hero-address { font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: normal; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    .hero-city { font-family: 'Arial', sans-serif; font-size: 1rem; opacity: 0.9; margin-top: 0.3rem; letter-spacing: 0.06em; }
+    .hero-price {
+      font-size: clamp(2rem, 5vw, 3.2rem); color: var(--gold); margin-top: 1rem;
+      font-weight: bold; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .hero-price small { font-size: 1rem; color: rgba(255,255,255,0.8); font-weight: normal; }
+    .hero-dots {
+      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.5rem;
+    }
+    .hero-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.4); cursor: pointer; border: none;
+      transition: background 0.3s;
+    }
+    .hero-dot.active { background: var(--gold); }
+    .hero-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.3); border: none; color: #fff;
+      width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+      font-size: 1.3rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .hero-arrow:hover { background: rgba(0,0,0,0.6); }
+    .hero-arrow.prev { left: 1.5rem; }
+    .hero-arrow.next { right: 1.5rem; }
+
+    /* ── QUICK STATS ─────────────────────────────── */
+    .stats-bar {
+      background: var(--navy);
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+    }
+    .stat {
+      padding: 1.1rem 2.2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-size: 1.5rem; color: var(--gold); font-weight: bold; }
+    .stat-lbl {
+      font-family: 'Arial', sans-serif; font-size: 0.72rem;
+      color: rgba(255,255,255,0.65); letter-spacing: 0.08em;
+      text-transform: uppercase; margin-top: 0.15rem;
+    }
+
+    /* ── SECTIONS ────────────────────────────────── */
+    section { padding: 4rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Arial', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    h2 { font-size: 1.9rem; font-weight: normal; color: var(--navy); margin-bottom: 1.5rem; }
+    p { line-height: 1.8; color: #444; margin-bottom: 1rem; }
+
+    /* ── DESCRIPTION ─────────────────────────────── */
+    #about { background: var(--cream); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+    .highlights { margin-top: 1.5rem; }
+    .highlight-item {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      margin-bottom: 0.6rem;
+      font-family: 'Arial', sans-serif; font-size: 0.9rem; color: #444;
+    }
+    .highlight-icon { color: var(--gold); font-size: 1rem; margin-top: 0.05rem; flex-shrink: 0; }
+
+    /* ── GALLERY ─────────────────────────────────── */
+    #gallery { background: var(--light); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .gallery-thumb {
+      aspect-ratio: 4/3; overflow: hidden; cursor: pointer;
+      border-radius: 4px;
+    }
+    .gallery-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-thumb:hover img { transform: scale(1.04); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.92);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw; max-height: 88vh;
+      object-fit: contain; border-radius: 4px;
+    }
+    .lb-close {
+      position: absolute; top: 1rem; right: 1.5rem;
+      color: #fff; font-size: 2rem; cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
+    .lb-prev, .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.12); border: none; color: #fff;
+      width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+      font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+    }
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+    .lb-counter {
+      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.7); font-family: Arial, sans-serif; font-size: 0.85rem;
+    }
+
+    /* ── VIRTUAL TOUR ────────────────────────────── */
+    #tour { background: var(--cream); }
+    .tour-embed {
+      width: 100%; height: 500px; border-radius: 6px;
+      border: none; margin-top: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    /* ── FLOORPLAN ───────────────────────────────── */
+    #floorplan { background: var(--light); }
+    .fp-tabs { display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .fp-tab {
+      padding: 0.5rem 1.3rem; border: 2px solid var(--border);
+      border-radius: 4px; cursor: pointer;
+      font-family: Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.04em;
+      background: #fff; color: var(--muted); transition: all 0.2s;
+    }
+    .fp-tab.active { border-color: var(--gold); background: var(--gold); color: #fff; }
+    .fp-panel { display: none; }
+    .fp-panel.active { display: block; }
+    .fp-panel img {
+      max-width: 100%; border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    /* ── RENTAL TERMS ────────────────────────────── */
+    #terms { background: var(--navy); color: #fff; }
+    #terms h2 { color: #fff; }
+    #terms .section-label { color: var(--gold); }
+    .terms-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 1.5rem;
+    }
+    .term-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; padding: 1.4rem 1.6rem;
+    }
+    .term-card-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .term-card-title {
+      font-family: Arial, sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .term-card p { color: rgba(255,255,255,0.82); font-size: 0.93rem; margin: 0; }
+    .term-card strong { color: #fff; font-size: 1.05rem; }
+
+    /* ── SCHOOLS ─────────────────────────────────── */
+    #schools { background: var(--cream); }
+    .schools-list { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+    .school-row {
+      display: flex; align-items: center; gap: 1rem;
+      background: #fff; border-radius: 6px; padding: 1rem 1.3rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      font-family: Arial, sans-serif;
+    }
+    .school-rating {
+      background: var(--gold); color: #fff;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .school-name { font-weight: bold; font-size: 0.92rem; }
+    .school-grade { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+    .school-dist { margin-left: auto; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+
+    /* ── CONTACT ─────────────────────────────────── */
+    #contact { background: var(--light); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3rem; }
+    @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-info p { color: #444; font-size: 0.95rem; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 0.7rem; margin-top: 1rem;
+      font-family: Arial, sans-serif; font-size: 0.9rem; color: #444;
+    }
+    .contact-detail-icon { font-size: 1.1rem; color: var(--gold); }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    label { font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+    input, select, textarea {
+      width: 100%; padding: 0.75rem 1rem;
+      border: 1px solid var(--border); border-radius: 4px;
+      font-family: Georgia, serif; font-size: 0.95rem; color: var(--text);
+      background: #fff; transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 130px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+    .btn-submit {
+      background: var(--gold); color: #fff; border: none;
+      padding: 0.9rem 2rem; border-radius: 4px; font-size: 1rem;
+      cursor: pointer; font-family: Arial, sans-serif; letter-spacing: 0.04em;
+      transition: background 0.2s; align-self: flex-start;
+    }
+    .btn-submit:hover { background: #b07d2f; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: #1a252f; color: rgba(255,255,255,0.5);
+      text-align: center; padding: 1.5rem;
+      font-family: Arial, sans-serif; font-size: 0.8rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">320 W Cheyenne Mountain <span>· For Rent</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#gallery">Photos</a>
+    <a href="#tour">3D Tour</a>
+    <a href="#terms">Rental Terms</a>
+    <a href="#contact" class="btn-nav">Schedule a Tour</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://photos.zillowstatic.com/fp/0bf8ac1b101dfbc9a21c215bfec5638c-cc_ft_1536.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://photos.zillowstatic.com/fp/bf607421fda6d64191b7b7c70e5cbfaa-cc_ft_1536.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://photos.zillowstatic.com/fp/fef7fa18e5bda12520a07e2cabad28c7-cc_ft_1536.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://photos.zillowstatic.com/fp/fc2b158826e6e6018d452587a4cbf499-cc_ft_1536.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://photos.zillowstatic.com/fp/3eb679df5bff2c8ae1573a6415b69be4-cc_ft_1536.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://photos.zillowstatic.com/fp/b5da6824a9d80698c532a737860a89c1-cc_ft_1536.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">For Rent · Colorado Springs, CO</div>
+    <div class="hero-address">320 W Cheyenne Mountain Blvd</div>
+    <div class="hero-city">Broadmoor Neighborhood · 80906</div>
+    <div class="hero-price">$3,950 <small>/month</small></div>
+  </div>
+  <button class="hero-arrow prev" onclick="heroStep(-1)">&#8249;</button>
+  <button class="hero-arrow next" onclick="heroStep(1)">&#8250;</button>
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<!-- QUICK STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">4</div><div class="stat-lbl">Bedrooms</div></div>
+  <div class="stat"><div class="stat-num">4</div><div class="stat-lbl">Bathrooms</div></div>
+  <div class="stat"><div class="stat-num">2,925</div><div class="stat-lbl">Sq Ft</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Car Garage</div></div>
+  <div class="stat"><div class="stat-num">0.4</div><div class="stat-lbl">Acre Lot</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Fireplaces</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">The Property</div>
+        <h2>A Broadmoor Charmer</h2>
+        <p>Majestic two-story home on a large, beautifully landscaped lot in the coveted Broadmoor neighborhood — just a short walk to award-winning Broadmoor Elementary and minutes from The Broadmoor resort.</p>
+        <p>The main level offers a bright formal living room, a cozy den with hardwood floors and fireplace, an updated kitchen with stone counters and newer cabinets, and a formal dining space that opens to the back patio. A loft on the upper level is perfect for a home office.</p>
+        <p>The primary suite features a barnwood-accent fireplace wall and a full en-suite bath. Two additional large bedrooms share a beautifully updated hall bath. The finished basement adds a flex/library space, exercise room, 4th bedroom, ¾ bath, and a renovated laundry room.</p>
+        <p>Step outside to a massive covered patio with barnwood trim, a hot tub, and a lush, mature-treed yard — a true Colorado oasis.</p>
+      </div>
+      <div>
+        <div class="section-label">Highlights</div>
+        <h2>What's Included</h2>
+        <div class="highlights">
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Hot tub on covered patio</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> 3 wood-burning fireplaces</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> 3-car attached garage with concrete driveway</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Updated kitchen — stone counters, newer cabinets</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Hardwood floors in den</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Bright loft/home office on upper level</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Fully fenced backyard</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Auto sprinkler system</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Renovated laundry room in basement</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Dishwasher, disposal, microwave, range, refrigerator</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> 0.4-acre cul-de-sac lot with mature trees</div>
+          <div class="highlight-item"><span class="highlight-icon">✦</span> Walk to Broadmoor Elementary (0.1 mi)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Photo Gallery</div>
+    <h2>Browse Every Room</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Photos inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">&#215;</button>
+  <button class="lb-prev" onclick="lbStep(-1)">&#8249;</button>
+  <img id="lbImg" src="" alt="Property photo" />
+  <button class="lb-next" onclick="lbStep(1)">&#8250;</button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<!-- VIRTUAL TOUR -->
+<section id="tour">
+  <div class="container">
+    <div class="section-label">Immersive Experience</div>
+    <h2>3D Virtual Tour</h2>
+    <p>Walk through every room before scheduling a visit. Use your mouse or touch to explore.</p>
+    <iframe
+      class="tour-embed"
+      src="https://www.zillow.com/view-imx/edcdd973-47a2-4bad-9fbf-efacf02f978d?wl=true&setAttribution=mls&initialViewType=pano"
+      allow="fullscreen; vr"
+      allowfullscreen
+      title="3D Virtual Tour – 320 W Cheyenne Mountain Blvd"
+    ></iframe>
+  </div>
+</section>
+
+<!-- FLOORPLAN -->
+<section id="floorplan">
+  <div class="container">
+    <div class="section-label">Layout</div>
+    <h2>Floor Plans</h2>
+    <div class="fp-tabs">
+      <button class="fp-tab active" onclick="showFloor('f1',this)">Floor 1 &nbsp;·&nbsp; ~999 sq ft</button>
+      <button class="fp-tab" onclick="showFloor('f2',this)">Floor 2 &nbsp;·&nbsp; ~1,041 sq ft</button>
+      <button class="fp-tab" onclick="showFloor('f3',this)">Basement &nbsp;·&nbsp; ~931 sq ft</button>
+    </div>
+    <div id="f1" class="fp-panel active">
+      <img src="floorplan-1.png" alt="Floor 1 Plan – ~999 sq ft" />
+    </div>
+    <div id="f2" class="fp-panel">
+      <img src="floorplan-2.png" alt="Floor 2 Plan – ~1,041 sq ft" />
+    </div>
+    <div id="f3" class="fp-panel">
+      <img src="floorplan-3.png" alt="Basement Plan – ~931 sq ft" />
+    </div>
+  </div>
+</section>
+
+<!-- RENTAL TERMS -->
+<section id="terms">
+  <div class="container">
+    <div class="section-label">Lease Details</div>
+    <h2>Rental Terms</h2>
+    <div class="terms-grid">
+
+      <div class="term-card">
+        <div class="term-card-icon">💰</div>
+        <div class="term-card-title">Monthly Rent</div>
+        <p><strong>$3,950 / month</strong></p>
+      </div>
+
+      <div class="term-card">
+        <div class="term-card-icon">🐾</div>
+        <div class="term-card-title">Pet Policy</div>
+        <p><strong>1 pet allowed</strong> — pet deposit or fee may apply. Please inquire for details.</p>
+      </div>
+
+      <div class="term-card">
+        <div class="term-card-icon">⚡</div>
+        <div class="term-card-title">Utilities (Tenant Pays)</div>
+        <p>Water · Electricity · Gas</p>
+      </div>
+
+      <div class="term-card">
+        <div class="term-card-icon">🌿</div>
+        <div class="term-card-title">Lawn & Landscaping</div>
+        <p>Tenant responsible for lawn mowing and lawn watering.</p>
+      </div>
+
+      <div class="term-card">
+        <div class="term-card-icon">♨️</div>
+        <div class="term-card-title">Hot Tub Maintenance</div>
+        <p>Tenant pays a monthly hot tub maintenance fee of <strong>$75/month</strong>.</p>
+      </div>
+
+      <div class="term-card">
+        <div class="term-card-icon">📋</div>
+        <div class="term-card-title">Lease Term</div>
+        <p>12-month lease preferred. Contact us to discuss availability and move-in date.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCHOOLS -->
+<section id="schools">
+  <div class="container">
+    <div class="section-label">Education</div>
+    <h2>Nearby Schools · District 12</h2>
+    <div class="schools-list">
+      <div class="school-row">
+        <div class="school-rating">8</div>
+        <div>
+          <div class="school-name">Broadmoor Elementary School</div>
+          <div class="school-grade">Grades K–6</div>
+        </div>
+        <div class="school-dist">0.1 mi · Walk</div>
+      </div>
+      <div class="school-row">
+        <div class="school-rating">4</div>
+        <div>
+          <div class="school-name">Cheyenne Mountain Junior High</div>
+          <div class="school-grade">Grades 7–8</div>
+        </div>
+        <div class="school-dist">1.0 mi</div>
+      </div>
+      <div class="school-row">
+        <div class="school-rating" style="background:#2C6B2F;">9</div>
+        <div>
+          <div class="school-name">Cheyenne Mountain High School</div>
+          <div class="school-grade">Grades 9–12</div>
+        </div>
+        <div class="school-dist">1.5 mi</div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-family:Arial,sans-serif;">
+      GreatSchools ratings. Contact the district to confirm assignments.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Get In Touch</div>
+        <h2>Schedule a Tour</h2>
+        <p>Interested in making 320 W Cheyenne Mountain Blvd your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span> 320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</div>
+        <div class="contact-detail"><span class="contact-detail-icon">💵</span> $3,950 / month</div>
+        <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 pet welcome</div>
+        <div class="contact-detail" style="margin-top:1.5rem;">
+          <span class="contact-detail-icon">🏔️</span>
+          <em style="font-size:0.88rem;color:var(--muted);">Located in the Broadmoor neighborhood — one of Colorado Springs' most sought-after communities.</em>
+        </div>
+      </div>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div>
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" required placeholder="Jane" />
+          </div>
+          <div>
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" required placeholder="Smith" />
+          </div>
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(719) 555-0100" />
+        </div>
+        <div>
+          <label for="movein">Desired Move-In Date</label>
+          <input type="date" id="movein" name="movein" />
+        </div>
+        <div>
+          <label for="pets">Pets?</label>
+          <select id="pets" name="pets">
+            <option value="none">No pets</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us a bit about yourself and any questions you have…"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Send Inquiry →</button>
+        <div id="formMsg" style="display:none;padding:0.7rem 1rem;background:#e8f4e8;border-radius:4px;font-family:Arial,sans-serif;font-size:0.88rem;color:#2C6B2F;"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $3,950/month</p>
+  <p style="margin-top:0.4rem;">Equal Housing Opportunity &nbsp;|&nbsp; Property managed privately</p>
+</footer>
+
+<script>
+  // ── HERO SLIDESHOW ──────────────────────────────────────
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsEl = document.getElementById('heroDots');
+  let current = 0, timer;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  function heroStep(d) { goTo(current + d); }
+  timer = setInterval(() => goTo(current + 1), 5000);
+
+  // ── GALLERY ─────────────────────────────────────────────
+  const photos = [
+    '0bf8ac1b101dfbc9a21c215bfec5638c',
+    'bf607421fda6d64191b7b7c70e5cbfaa',
+    'fef7fa18e5bda12520a07e2cabad28c7',
+    'fc2b158826e6e6018d452587a4cbf499',
+    '3eb679df5bff2c8ae1573a6415b69be4',
+    'b5da6824a9d80698c532a737860a89c1',
+    'd3685f929d73620f460b956313e9e46d',
+    '61e2060ad4c7433fbe8f0598f54c11f8',
+    'a099bcf244376672e8674c9918f9aea3',
+    '64e2e5c9500647a694e5844fa49091a7',
+    '5a1f826b093d9c610020b0494aadceff',
+    '2faef3f1a42f225a2257faa3dbb5638f',
+    'b6da0885f79b7f62b4e8bc8a768621be',
+    'd596b8b42f1a5aae5ef15b34626229d3',
+    '946b2e511905302c4a40f902ed85033b',
+    '38d714f6f82dadc4a1e71cfb409e8009',
+    '898f9b6be1869a37e7b5c4667dc40bb4',
+    '5785ce6e465a01341bbda0da67987d5c',
+    // additional smaller shots
+    'e7b2612e68da3282ec2a7ebfb7d0b832',
+    'abce39228e996aea6cc8a81df94a46c3',
+    'd996a25df3ba58dc932cfbd9952e03ff',
+    '3df723662dafd45c8b72bf2b3ed5634c',
+    'a0d4e16c5ad0efc51d336bfea4a3f820',
+    'e650b9b2054a83f962dd0e2f7cb90cbe',
+    '448b6f41b572df96fb98e664174b0eac',
+    'e3a6b8ed2f1574ee3f1123dfc7db5075',
+    'c5873218344773b6c0f821eb6f0ada47',
+    '5889950029cfa8e28555705d6d2b54c2',
+    '3d87baf89cc0306649573e570f5fa3cc',
+    '1bb2877b9f308091f7f0ee241281cb06',
+    'a2dd46243bc5aee06d1cc7685e525331',
+    'd56b32f030912281c28f3d8edba22aa8',
+    '7400c35bf190ad56b61767ac61df9ad4',
+    '3adeeb53e898d2198d6ec292b2a8be12',
+    '8542b05d27b5fc2564f2acbc8ac78478',
+    'ea7d1464802be7538c34fbe6f4f5b46e',
+    '5f47816afa52554c451382f282db4e2d',
+    'ff581c1322a5ebf9bc4d0e370fecdf77',
+    'dcac55652d188a813a5bc268fd9d1cbb',
+    'ec8b82088d997b8da3dd043f1d0c2143',
+    '1bfa69c34fa477d6226b863a3b18d6e5',
+    'fa8b66b15a64e1ba161efd76c4dba30a',
+    'ccc5245639296b2789da227f03774061',
+    '68a140f667548ca60fbd6a49dfe73af1',
+    '496581ee36675740182453a7c8c44e05',
+    '1dc37d5d0711fb7f4c81e3484a5f86c2',
+    'd1330f869479f94df8c22a6ca1afbf46',
+    '5deb4c7139abad2581c128a64955871f',
+    'cc3f965e9b49eac2ebc31f13f78bcef5',
+  ];
+
+  const grid = document.getElementById('galleryGrid');
+  photos.forEach((hash, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'gallery-thumb';
+    thumb.onclick = () => openLightbox(i);
+    const img = document.createElement('img');
+    const size = i < 18 ? '1536' : '768';
+    img.src = `https://photos.zillowstatic.com/fp/${hash}-cc_ft_${size}.jpg`;
+    img.alt = `Property photo ${i + 1}`;
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+    grid.appendChild(thumb);
+  });
+
+  // ── LIGHTBOX ─────────────────────────────────────────────
+  let lbIndex = 0;
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCounter = document.getElementById('lbCounter');
+
+  function openLightbox(i) {
+    lbIndex = i;
+    updateLb();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function updateLb() {
+    const hash = photos[lbIndex];
+    const size = lbIndex < 18 ? '1536' : '768';
+    lbImg.src = `https://photos.zillowstatic.com/fp/${hash}-cc_ft_${size}.jpg`;
+    lbCounter.textContent = `${lbIndex + 1} / ${photos.length}`;
+  }
+  function lbStep(d) {
+    lbIndex = (lbIndex + d + photos.length) % photos.length;
+    updateLb();
+  }
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // ── FLOORPLAN TABS ───────────────────────────────────────
+  function showFloor(id, btn) {
+    document.querySelectorAll('.fp-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.fp-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── CONTACT FORM ──────────────────────────────────────────
+  function submitForm(e) {
+    e.preventDefault();
+    const f = e.target;
+    const name   = f.fname.value + ' ' + f.lname.value;
+    const email  = f.email.value;
+    const phone  = f.phone.value;
+    const movein = f.movein.value;
+    const pets   = f.pets.value;
+    const msg    = f.message.value;
+
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMove-in: ${movein}\nPets: ${pets}\n\nMessage:\n${msg}`
+    );
+    const subject = encodeURIComponent('Rental Inquiry – 320 W Cheyenne Mountain Blvd');
+    window.location.href = `mailto:ilana.jesse@gmail.com?subject=${subject}&body=${body}`;
+
+    const msgEl = document.getElementById('formMsg');
+    msgEl.style.display = 'block';
+    msgEl.textContent = '✓ Your email client should open shortly. We look forward to hearing from you!';
+  }
+</script>
+</body>
+</html>
