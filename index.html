@@ -4,19 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For Rent: 320 W Cheyenne Mountain Blvd · Colorado Springs, CO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy:   #2C3E50;
-      --gold:   #C8913A;
-      --cream:  #F5F1EB;
-      --light:  #FAF8F4;
-      --text:   #333333;
-      --muted:  #6B7280;
-      --border: #E5DDD0;
+      --navy:   #1A1A1A;
+      --gold:   #9B7E5E;
+      --cream:  #F4F1EC;
+      --light:  #FAFAF8;
+      --text:   #1A1A1A;
+      --muted:  #7A7670;
+      --border: #E0DBD4;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Georgia', serif; color: var(--text); background: var(--light); }
+    body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text); background: var(--light); }
 
     /* ── NAV ─────────────────────────────────────── */
     nav {
@@ -25,12 +28,12 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
     }
-    .nav-brand { color: #fff; font-size: 1rem; letter-spacing: 0.05em; }
+    .nav-brand { color: #fff; font-size: 0.9rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
     .nav-brand span { color: var(--gold); }
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
     .nav-links a {
       color: rgba(255,255,255,0.8); text-decoration: none;
-      font-family: 'Arial', sans-serif; font-size: 0.85rem; letter-spacing: 0.04em;
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; letter-spacing: 0.04em;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--gold); }
@@ -39,7 +42,7 @@
       padding: 0.45rem 1.1rem; border-radius: 4px;
       font-weight: bold;
     }
-    .btn-nav:hover { background: #b07d2f !important; }
+    .btn-nav:hover { background: #7a6248 !important; }
 
     /* hamburger */
     .nav-hamburger {
@@ -96,17 +99,18 @@
     }
     .hero-tag {
       display: inline-block; background: var(--gold);
-      font-family: 'Arial', sans-serif; font-size: 0.75rem;
+      font-family: 'Inter', sans-serif; font-size: 0.75rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       padding: 0.3rem 0.9rem; border-radius: 2px; margin-bottom: 0.9rem;
     }
-    .hero-address { font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: normal; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
-    .hero-city { font-family: 'Arial', sans-serif; font-size: 1rem; opacity: 0.9; margin-top: 0.3rem; letter-spacing: 0.06em; }
+    .hero-address { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 300; letter-spacing: 0.02em; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+    .hero-city { font-family: 'Inter', sans-serif; font-size: 0.82rem; opacity: 0.85; margin-top: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 400; }
     .hero-price {
-      font-size: clamp(2rem, 5vw, 3.2rem); color: var(--gold); margin-top: 1rem;
-      font-weight: bold; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem); color: #fff; margin-top: 1.2rem;
+      font-weight: 300; letter-spacing: 0.02em; text-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
-    .hero-price small { font-size: 1rem; color: rgba(255,255,255,0.8); font-weight: normal; }
+    .hero-price small { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 300; letter-spacing: 0.1em; }
     .hero-dots {
       position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
       display: flex; gap: 0.5rem;
@@ -141,7 +145,7 @@
     .stat:last-child { border-right: none; }
     .stat-num { font-size: 1.5rem; color: var(--gold); font-weight: bold; }
     .stat-lbl {
-      font-family: 'Arial', sans-serif; font-size: 0.72rem;
+      font-family: 'Inter', sans-serif; font-size: 0.72rem;
       color: rgba(255,255,255,0.65); letter-spacing: 0.08em;
       text-transform: uppercase; margin-top: 0.15rem;
     }
@@ -150,12 +154,12 @@
     section { padding: 4rem 1.5rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label {
-      font-family: 'Arial', sans-serif; font-size: 0.72rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.5rem;
+      font-family: 'Inter', sans-serif; font-size: 0.68rem;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      color: var(--gold); margin-bottom: 0.6rem;
     }
-    h2 { font-size: 1.9rem; font-weight: normal; color: var(--navy); margin-bottom: 1.5rem; }
-    p { line-height: 1.8; color: #444; margin-bottom: 1rem; }
+    h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; letter-spacing: 0.01em; color: var(--navy); margin-bottom: 1.5rem; line-height: 1.2; }
+    p { line-height: 1.8; color: #3A3A3A; margin-bottom: 1rem; }
 
     /* ── DESCRIPTION ─────────────────────────────── */
     #about { background: var(--cream); }
@@ -165,7 +169,7 @@
     .highlight-item {
       display: flex; align-items: flex-start; gap: 0.7rem;
       margin-bottom: 0.6rem;
-      font-family: 'Arial', sans-serif; font-size: 0.9rem; color: #444;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #444;
     }
     .highlight-icon { color: var(--gold); font-size: 1rem; margin-top: 0.05rem; flex-shrink: 0; }
 
@@ -271,12 +275,7 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       font-family: Arial, sans-serif;
     }
-    .school-rating {
-      background: var(--gold); color: #fff;
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: bold; font-size: 0.85rem; flex-shrink: 0;
-    }
+    .school-rating { display: none; }
     .school-name { font-weight: bold; font-size: 0.92rem; }
     .school-grade { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
     .school-dist { margin-left: auto; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
@@ -296,7 +295,7 @@
     input, select, textarea {
       width: 100%; padding: 0.75rem 1rem;
       border: 1px solid var(--border); border-radius: 4px;
-      font-family: Georgia, serif; font-size: 0.95rem; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text);
       background: #fff; transition: border-color 0.2s;
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
@@ -309,7 +308,7 @@
       cursor: pointer; font-family: Arial, sans-serif; letter-spacing: 0.04em;
       transition: background 0.2s; align-self: flex-start;
     }
-    .btn-submit:hover { background: #b07d2f; }
+    .btn-submit:hover { background: #7a6248; }
 
     /* ── MOBILE ──────────────────────────────────── */
     @media (max-width: 768px) {
@@ -334,7 +333,7 @@
 
       /* sections */
       section { padding: 2.5rem 1rem; }
-      h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+      h2 { font-size: 2rem; margin-bottom: 1rem; }
 
       /* virtual tour */
       .tour-embed { height: 280px; }
@@ -362,7 +361,7 @@
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
-      background: #1a252f; color: rgba(255,255,255,0.5);
+      background: #111111; color: rgba(255,255,255,0.4);
       text-align: center; padding: 1.5rem;
       font-family: Arial, sans-serif; font-size: 0.8rem;
     }
@@ -408,7 +407,7 @@
     <div class="hero-tag">For Rent · Colorado Springs, CO</div>
     <div class="hero-address">320 W Cheyenne Mountain Blvd</div>
     <div class="hero-city">Broadmoor Neighborhood · 80906</div>
-    <div class="hero-price">$4,025 <small>/month</small></div>
+    <div class="hero-price">$4,050 <small>/month</small></div>
   </div>
   <button class="hero-arrow prev" onclick="heroStep(-1)">&#8249;</button>
   <button class="hero-arrow next" onclick="heroStep(1)">&#8250;</button>
@@ -527,7 +526,7 @@
       <div class="term-card">
         <div class="term-card-icon">💰</div>
         <div class="term-card-title">Monthly Rent</div>
-        <p><strong>$4,025 / month</strong></p>
+        <p><strong>$4,050 / month</strong></p>
       </div>
 
       <div class="term-card">
@@ -558,7 +557,7 @@
       <div class="term-card">
         <div class="term-card-icon">🔐</div>
         <div class="term-card-title">Security Deposit</div>
-        <p><strong>$4,025</strong> (one month's rent), due at lease signing.</p>
+        <p><strong>$4,050</strong> (one month's rent), due at lease signing.</p>
       </div>
 
     </div>
@@ -588,7 +587,7 @@
         <div class="school-dist">1.0 mi</div>
       </div>
       <div class="school-row">
-        <div class="school-rating" style="background:#2C6B2F;">9</div>
+        <div class="school-rating" style="background:#2A6049;">9</div>
         <div>
           <div class="school-name">Cheyenne Mountain High School</div>
           <div class="school-grade">Grades 9–12</div>
@@ -596,8 +595,8 @@
         <div class="school-dist">1.5 mi</div>
       </div>
     </div>
-    <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-family:Arial,sans-serif;">
-      GreatSchools ratings. Contact the district to confirm assignments.
+    <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-family:'Inter',sans-serif;">
+      Contact the district to confirm school assignments.
     </p>
   </div>
 </section>
@@ -611,7 +610,7 @@
         <h2>Schedule a Tour</h2>
         <p>Interested in making 320 W Cheyenne Mountain Blvd your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
         <div class="contact-detail"><span class="contact-detail-icon">📍</span> 320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</div>
-        <div class="contact-detail"><span class="contact-detail-icon">💵</span> $4,025 / month</div>
+        <div class="contact-detail"><span class="contact-detail-icon">💵</span> $4,050 / month</div>
         <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 dog welcome · $60/mo pet rent · $300 deposit</div>
         <div class="contact-detail" style="margin-top:1.5rem;">
           <span class="contact-detail-icon">🏔️</span>
@@ -661,7 +660,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $4,025/month</p>
+  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $4,050/month</p>
   <p style="margin-top:0.4rem;">Equal Housing Opportunity &nbsp;|&nbsp; Property managed privately</p>
 </footer>
 
