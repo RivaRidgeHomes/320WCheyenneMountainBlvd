@@ -618,49 +618,42 @@
           <em style="font-size:0.88rem;color:var(--muted);">Located in the Broadmoor neighborhood — one of Colorado Springs' most sought-after communities.</em>
         </div>
       </div>
-      <form id="contactForm">
-        <input type="hidden" name="_subject" value="Rental Inquiry - 320 W Cheyenne Mtn Blvd" />
+      <form id="contactForm" onsubmit="sendInquiry(event)">
         <div class="form-row">
           <div>
             <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" required placeholder="Jane" data-fs-field />
+            <input type="text" id="fname" name="fname" required placeholder="Jane" />
           </div>
           <div>
             <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" required placeholder="Smith" data-fs-field />
+            <input type="text" id="lname" name="lname" required placeholder="Smith" />
           </div>
         </div>
         <div>
           <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" required placeholder="jane@example.com" data-fs-field />
-          <span data-fs-error="email" style="color:#8b1a1a;font-size:0.8rem;"></span>
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" />
         </div>
         <div>
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="(719) 555-0100" data-fs-field />
+          <input type="tel" id="phone" name="phone" placeholder="(719) 555-0100" />
         </div>
         <div>
           <label for="movein">Desired Move-In Date</label>
-          <input type="date" id="movein" name="movein" data-fs-field />
+          <input type="date" id="movein" name="movein" />
         </div>
         <div>
           <label for="pets">Pets?</label>
-          <select id="pets" name="pets" data-fs-field>
-            <option value="none">No pets</option>
-            <option value="dog">Dog (1 allowed · $60/mo + $300 deposit)</option>
+          <select id="pets" name="pets">
+            <option value="No pets">No pets</option>
+            <option value="Dog (1) — $60/mo pet rent + $300 deposit">Dog (1 allowed · $60/mo + $300 deposit)</option>
           </select>
         </div>
         <div>
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell us a bit about yourself and any questions you have…" data-fs-field></textarea>
+          <textarea id="message" name="message" placeholder="Tell us a bit about yourself and any questions you have…"></textarea>
         </div>
-        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Inquiry →</button>
-        <div data-fs-success style="display:none;padding:0.8rem 1rem;background:#eef6ee;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#2a6049;margin-top:0.5rem;">
-          ✓ Message sent! We'll be in touch within 24 hours.
-        </div>
-        <div data-fs-error style="display:none;padding:0.8rem 1rem;background:#fdecea;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#8b1a1a;margin-top:0.5rem;">
-          Something went wrong — please email us directly at rivaridgehomes@gmail.com
-        </div>
+        <button type="submit" class="btn-submit">Send Inquiry →</button>
+        <div id="formMsg" style="display:none;padding:0.8rem 1rem;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;margin-top:0.5rem;"></div>
       </form>
     </div>
   </div>
@@ -829,13 +822,38 @@
   }
 
 
-</script>
+  // ── CONTACT FORM (mailto) ────────────────────────────────
+  function sendInquiry(e) {
+    e.preventDefault();
+    const f = e.target;
+    const msgEl = document.getElementById('formMsg');
 
-<!-- Formspree Ajax library (handles submission, errors, success automatically) -->
-<script>
-  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-  formspree('initForm', { formElement: '#contactForm', formId: 'mwvjzjol' });
+    const name    = f.fname.value.trim() + ' ' + f.lname.value.trim();
+    const email   = f.email.value.trim();
+    const phone   = f.phone.value.trim() || 'Not provided';
+    const movein  = f.movein.value || 'Not specified';
+    const pets    = f.pets.value;
+    const message = f.message.value.trim() || 'No additional message.';
+
+    const subject = 'Rental Inquiry - 320 W Cheyenne Mtn Blvd';
+    const body = [
+      'Name: ' + name,
+      'Email: ' + email,
+      'Phone: ' + phone,
+      'Desired Move-In: ' + movein,
+      'Pets: ' + pets,
+      '',
+      'Message:',
+      message,
+    ].join('\n');
+
+    window.location.href = 'mailto:rivaridgehomes@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+
+    msgEl.style.cssText = 'display:block;background:#eef6ee;color:#2a6049;';
+    msgEl.textContent = 'Your email client should open with the inquiry pre-filled — just hit Send!';
+  }
 </script>
-<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
