@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="address=no, telephone=no" />
   <title>For Rent: 320 W Cheyenne Mountain Blvd · Colorado Springs, CO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -609,7 +610,7 @@
         <div class="section-label">Get In Touch</div>
         <h2>Schedule a Tour</h2>
         <p>Interested in making 320 W Cheyenne Mountain Blvd your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
-        <div class="contact-detail"><span class="contact-detail-icon">📍</span> 320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</div>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span> <a href="https://maps.google.com/?q=320+W+Cheyenne+Mountain+Blvd,+Colorado+Springs,+CO+80906" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</a></div>
         <div class="contact-detail"><span class="contact-detail-icon">💵</span> $4,050 / month</div>
         <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 dog welcome · $60/mo pet rent · $300 deposit</div>
         <div class="contact-detail" style="margin-top:1.5rem;">
@@ -660,7 +661,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906 · $4,050/month</p>
+  <p><a href="https://maps.google.com/?q=320+W+Cheyenne+Mountain+Blvd,+Colorado+Springs,+CO+80906" target="_blank" style="color:inherit;text-decoration:none;">320 W Cheyenne Mountain Blvd · Colorado Springs, CO 80906</a> · $4,050/month</p>
   <p style="margin-top:0.4rem;">Equal Housing Opportunity &nbsp;|&nbsp; Property managed privately</p>
 </footer>
 
@@ -821,25 +822,45 @@
   }
 
   // ── CONTACT FORM ──────────────────────────────────────────
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
-    const f = e.target;
-    const name   = f.fname.value + ' ' + f.lname.value;
-    const email  = f.email.value;
-    const phone  = f.phone.value;
-    const movein = f.movein.value;
-    const pets   = f.pets.value;
-    const msg    = f.message.value;
+    const f        = e.target;
+    const btn      = f.querySelector('.btn-submit');
+    const msgEl    = document.getElementById('formMsg');
 
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMove-in: ${movein}\nPets: ${pets}\n\nMessage:\n${msg}`
-    );
-    const subject = encodeURIComponent('Rental Inquiry – 320 W Cheyenne Mountain Blvd');
-    window.location.href = `mailto:ilana.jesse@gmail.com?subject=${subject}&body=${body}`;
+    btn.disabled   = true;
+    btn.textContent = 'Sending…';
 
-    const msgEl = document.getElementById('formMsg');
-    msgEl.style.display = 'block';
-    msgEl.textContent = '✓ Your email client should open shortly. We look forward to hearing from you!';
+    const payload = {
+      _subject: 'Rental Inquiry - 320 W Cheyenne Mtn Blvd',
+      name:    f.fname.value + ' ' + f.lname.value,
+      email:   f.email.value,
+      phone:   f.phone.value,
+      movein:  f.movein.value,
+      pets:    f.pets.value,
+      message: f.message.value,
+    };
+
+    try {
+      const res = await fetch('https://formspree.io/f/mwvjzjol', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+      if (res.ok) {
+        f.reset();
+        msgEl.style.cssText = 'display:block;padding:0.8rem 1rem;background:#eef6ee;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#2a6049;margin-top:0.5rem;';
+        msgEl.textContent = '✓ Message sent! We'll be in touch within 24 hours.';
+        btn.textContent = 'Sent ✓';
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      msgEl.style.cssText = 'display:block;padding:0.8rem 1rem;background:#fdecea;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#8b1a1a;margin-top:0.5rem;';
+      msgEl.textContent = 'Something went wrong — please email us directly at rivaridgehomes@gmail.com';
+      btn.disabled   = false;
+      btn.textContent = 'Send Inquiry →';
+    }
   }
 </script>
 </body>
