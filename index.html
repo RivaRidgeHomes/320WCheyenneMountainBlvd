@@ -406,7 +406,7 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-tag">For Rent · Colorado Springs, CO</div>
-    <div class="hero-address">320 W Cheyenne Mountain Blvd</div>
+    <div class="hero-address"><a href="https://maps.google.com/?q=320+W+Cheyenne+Mountain+Blvd,+Colorado+Springs,+CO+80906" target="_blank" style="color:inherit;text-decoration:none;">320 W Cheyenne Mountain Blvd</a></div>
     <div class="hero-city">Broadmoor Neighborhood · 80906</div>
     <div class="hero-price">$4,050 <small>/month</small></div>
   </div>
@@ -609,7 +609,7 @@
       <div class="contact-info">
         <div class="section-label">Get In Touch</div>
         <h2>Schedule a Tour</h2>
-        <p>Interested in making 320 W Cheyenne Mountain Blvd your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
+        <p>Interested in making <a href="https://maps.google.com/?q=320+W+Cheyenne+Mountain+Blvd,+Colorado+Springs,+CO+80906" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">320 W Cheyenne Mountain Blvd</a> your next home? Fill out the form and we'll be in touch within 24 hours to confirm a showing.</p>
         <div class="contact-detail"><span class="contact-detail-icon">📍</span> <a href="https://maps.google.com/?q=320+W+Cheyenne+Mountain+Blvd,+Colorado+Springs,+CO+80906" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">320 W Cheyenne Mountain Blvd<br>Colorado Springs, CO 80906</a></div>
         <div class="contact-detail"><span class="contact-detail-icon">💵</span> $4,050 / month</div>
         <div class="contact-detail"><span class="contact-detail-icon">🐾</span> 1 dog welcome · $60/mo pet rent · $300 deposit</div>
@@ -618,42 +618,49 @@
           <em style="font-size:0.88rem;color:var(--muted);">Located in the Broadmoor neighborhood — one of Colorado Springs' most sought-after communities.</em>
         </div>
       </div>
-      <form id="contactForm" onsubmit="submitForm(event)">
+      <form id="contactForm">
+        <input type="hidden" name="_subject" value="Rental Inquiry - 320 W Cheyenne Mtn Blvd" />
         <div class="form-row">
           <div>
             <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" required placeholder="Jane" />
+            <input type="text" id="fname" name="fname" required placeholder="Jane" data-fs-field />
           </div>
           <div>
             <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" required placeholder="Smith" />
+            <input type="text" id="lname" name="lname" required placeholder="Smith" data-fs-field />
           </div>
         </div>
         <div>
           <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" data-fs-field />
+          <span data-fs-error="email" style="color:#8b1a1a;font-size:0.8rem;"></span>
         </div>
         <div>
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="(719) 555-0100" />
+          <input type="tel" id="phone" name="phone" placeholder="(719) 555-0100" data-fs-field />
         </div>
         <div>
           <label for="movein">Desired Move-In Date</label>
-          <input type="date" id="movein" name="movein" />
+          <input type="date" id="movein" name="movein" data-fs-field />
         </div>
         <div>
           <label for="pets">Pets?</label>
-          <select id="pets" name="pets">
+          <select id="pets" name="pets" data-fs-field>
             <option value="none">No pets</option>
             <option value="dog">Dog (1 allowed · $60/mo + $300 deposit)</option>
           </select>
         </div>
         <div>
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell us a bit about yourself and any questions you have…"></textarea>
+          <textarea id="message" name="message" placeholder="Tell us a bit about yourself and any questions you have…" data-fs-field></textarea>
         </div>
-        <button type="submit" class="btn-submit">Send Inquiry →</button>
-        <div id="formMsg" style="display:none;padding:0.7rem 1rem;background:#e8f4e8;border-radius:4px;font-family:Arial,sans-serif;font-size:0.88rem;color:#2C6B2F;"></div>
+        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Inquiry →</button>
+        <div data-fs-success style="display:none;padding:0.8rem 1rem;background:#eef6ee;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#2a6049;margin-top:0.5rem;">
+          ✓ Message sent! We'll be in touch within 24 hours.
+        </div>
+        <div data-fs-error style="display:none;padding:0.8rem 1rem;background:#fdecea;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#8b1a1a;margin-top:0.5rem;">
+          Something went wrong — please email us directly at rivaridgehomes@gmail.com
+        </div>
       </form>
     </div>
   </div>
@@ -821,47 +828,14 @@
     btn.classList.add('active');
   }
 
-  // ── CONTACT FORM ──────────────────────────────────────────
-  async function submitForm(e) {
-    e.preventDefault();
-    const f        = e.target;
-    const btn      = f.querySelector('.btn-submit');
-    const msgEl    = document.getElementById('formMsg');
 
-    btn.disabled   = true;
-    btn.textContent = 'Sending…';
-
-    const payload = {
-      _subject: 'Rental Inquiry - 320 W Cheyenne Mtn Blvd',
-      name:    f.fname.value + ' ' + f.lname.value,
-      email:   f.email.value,
-      phone:   f.phone.value,
-      movein:  f.movein.value,
-      pets:    f.pets.value,
-      message: f.message.value,
-    };
-
-    try {
-      const res = await fetch('https://formspree.io/f/mwvjzjol', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body:    JSON.stringify(payload),
-      });
-      if (res.ok) {
-        f.reset();
-        msgEl.style.cssText = 'display:block;padding:0.8rem 1rem;background:#eef6ee;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#2a6049;margin-top:0.5rem;';
-        msgEl.textContent = '✓ Message sent! We'll be in touch within 24 hours.';
-        btn.textContent = 'Sent ✓';
-      } else {
-        throw new Error('Server error');
-      }
-    } catch {
-      msgEl.style.cssText = 'display:block;padding:0.8rem 1rem;background:#fdecea;border-radius:4px;font-family:Inter,sans-serif;font-size:0.88rem;color:#8b1a1a;margin-top:0.5rem;';
-      msgEl.textContent = 'Something went wrong — please email us directly at rivaridgehomes@gmail.com';
-      btn.disabled   = false;
-      btn.textContent = 'Send Inquiry →';
-    }
-  }
 </script>
+
+<!-- Formspree Ajax library (handles submission, errors, success automatically) -->
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contactForm', formId: 'mwvjzjol' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
